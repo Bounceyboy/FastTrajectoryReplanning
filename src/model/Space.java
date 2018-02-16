@@ -5,7 +5,7 @@ import java.util.Random;
 public class Space {
 	
 	boolean visited, revealed, blocked;
-	
+	//comment
 	Space() {
 		this.visited = false;
 		this.revealed = false;
