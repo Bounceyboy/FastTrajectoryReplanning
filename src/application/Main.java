@@ -5,10 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
+	
+	Stage stage = new Stage();
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -17,10 +19,10 @@ public class Main extends Application {
 			Parent root = loader.load();
 			Scene scene = new Scene(root,900,600);
 			
-			primaryStage.setScene(scene);
-			primaryStage.setResizable(false);
-			primaryStage.setTitle("AI Project 1");
-			primaryStage.show();
+			stage.setScene(scene);
+			stage.setResizable(false);
+			stage.setTitle("AI Project 1");
+			stage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
