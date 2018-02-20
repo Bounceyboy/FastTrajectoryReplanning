@@ -17,10 +17,8 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/view/Main.fxml"));
 			Parent root = loader.load();
-			Scene scene = new Scene(root,900,600);
-			
+			Scene scene = new Scene(root,835,600);
 			stage.setScene(scene);
-			stage.setResizable(false);
 			stage.setTitle("AI Project 1");
 			stage.show();
 		} catch(Exception e) {
