@@ -63,4 +63,8 @@ public class Environment {
 		if(r!=100)
 			map[q][r+1].revealed = true;
 	}
+	
+	public Space[][] getMap(){
+		return map;
+	}
 }

@@ -5,15 +5,63 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="835.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="835.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
-      <MenuButton fx:id="menuButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="200.0" text="Map">
+      <MenuButton fx:id="menuButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="200.0" text="Choose Map">
         <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
+          <MenuItem mnemonicParsing="false" text="Map 1" />
+          <MenuItem mnemonicParsing="false" text="Map 2" />
+          <MenuItem mnemonicParsing="false" text="Map 3" />
+          <MenuItem mnemonicParsing="false" text="Map 4" />
+          <MenuItem mnemonicParsing="false" text="Map 5" />
+          <MenuItem mnemonicParsing="false" text="Map 6" />
+          <MenuItem mnemonicParsing="false" text="Map 7" />
+          <MenuItem mnemonicParsing="false" text="Map 8" />
+          <MenuItem mnemonicParsing="false" text="Map 9" />
+          <MenuItem mnemonicParsing="false" text="Map 10" />
+          <MenuItem mnemonicParsing="false" text="Map 11" />
+          <MenuItem mnemonicParsing="false" text="Map 12" />
+          <MenuItem mnemonicParsing="false" text="Map 13" />
+          <MenuItem mnemonicParsing="false" text="Map 14" />
+          <MenuItem mnemonicParsing="false" text="Map 15" />
+          <MenuItem mnemonicParsing="false" text="Map 16" />
+          <MenuItem mnemonicParsing="false" text="Map 17" />
+          <MenuItem mnemonicParsing="false" text="Map 18" />
+          <MenuItem mnemonicParsing="false" text="Map 19" />
+          <MenuItem mnemonicParsing="false" text="Map 20" />
+          <MenuItem mnemonicParsing="false" text="Map 21" />
+          <MenuItem mnemonicParsing="false" text="Map 22" />
+          <MenuItem mnemonicParsing="false" text="Map 23" />
+          <MenuItem mnemonicParsing="false" text="Map 24" />
+          <MenuItem mnemonicParsing="false" text="Map 25" />
+          <MenuItem mnemonicParsing="false" text="Map 26" />
+          <MenuItem mnemonicParsing="false" text="Map 27" />
+          <MenuItem mnemonicParsing="false" text="Map 28" />
+          <MenuItem mnemonicParsing="false" text="Map 29" />
+          <MenuItem mnemonicParsing="false" text="Map 30" />
+          <MenuItem mnemonicParsing="false" text="Map 31" />
+          <MenuItem mnemonicParsing="false" text="Map 32" />
+          <MenuItem mnemonicParsing="false" text="Map 33" />
+          <MenuItem mnemonicParsing="false" text="Map 34" />
+          <MenuItem mnemonicParsing="false" text="Map 35" />
+          <MenuItem mnemonicParsing="false" text="Map 36" />
+          <MenuItem mnemonicParsing="false" text="Map 37" />
+          <MenuItem mnemonicParsing="false" text="Map 38" />
+          <MenuItem mnemonicParsing="false" text="Map 39" />
+          <MenuItem mnemonicParsing="false" text="Map 40" />
+          <MenuItem mnemonicParsing="false" text="Map 41" />
+          <MenuItem mnemonicParsing="false" text="Map 42" />
+          <MenuItem mnemonicParsing="false" text="Map 43" />
+          <MenuItem mnemonicParsing="false" text="Map 44" />
+          <MenuItem mnemonicParsing="false" text="Map 45" />
+          <MenuItem mnemonicParsing="false" text="Map 46" />
+          <MenuItem mnemonicParsing="false" text="Map 47" />
+          <MenuItem mnemonicParsing="false" text="Map 48" />
+          <MenuItem mnemonicParsing="false" text="Map 49" />
+          <MenuItem mnemonicParsing="false" text="Map 50" />
         </items>
       </MenuButton>
-      <Button fx:id="startButton" layoutX="14.0" layoutY="67.0" mnemonicParsing="false" text="Go!" />
+      <Button fx:id="goButton" layoutX="14.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleGoButtonAction" prefHeight="39.0" prefWidth="53.0" text="Go!" />
       <Button fx:id="remakeButton" layoutX="76.0" layoutY="67.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="137.0" text="Remake Maps" />
       <GridPane fx:id="grid" gridLinesVisible="true" layoutX="234.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="235.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
