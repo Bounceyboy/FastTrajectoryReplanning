@@ -23,7 +23,10 @@ import java.util.Random;
  */
 public class Environment {
 	Space[][] map;
-	int endx, endy, startx, starty;
+	private int endx;
+	private int endy;
+	int startx;
+	int starty;
 	
 	Environment(){
 		map = new Space[101][101];
@@ -35,36 +38,52 @@ public class Environment {
 		Random rand = new Random();
 		int q = rand.nextInt(101);
 		int r = rand.nextInt(101);
-		endx = q;
-		endy = r;
-		map[q][r].blocked = false;
-		map[q][r].revealed = true;
+		setEndx(q);
+		setEndy(r);
+		map[q][r].setBlocked(false);
+		map[q][r].setRevealed(true);
 		q = rand.nextInt(101);
 		r = rand.nextInt(101);
 		startx = q;
 		starty = r;
-		if(startx == endx && starty == endy){
-			while (startx == endx && starty == endy){
+		if(startx == getEndx() && starty == getEndy()){
+			while (startx == getEndx() && starty == getEndy()){
 				q = rand.nextInt(101);
 				r = rand.nextInt(101);
 				startx = q;
 				starty = r;
 			}
 		}
-		map[q][r].blocked = false;
-		map[q][r].revealed = true;
-		map[q][r].visited = true;
+		map[q][r].setBlocked(false);
+		map[q][r].setRevealed(true);
+		map[q][r].setVisited(true);
 		if(q!=0)
-			map[q-1][r].revealed = true;
+			map[q-1][r].setRevealed(true);
 		if(q!=100)
-			map[q+1][r].revealed = true;
+			map[q+1][r].setRevealed(true);
 		if(r!=0)
-			map[q][r-1].revealed = true;
+			map[q][r-1].setRevealed(true);
 		if(r!=100)
-			map[q][r+1].revealed = true;
+			map[q][r+1].setRevealed(true);
 	}
 	
 	public Space[][] getMap(){
 		return map;
+	}
+
+	public int getEndx() {
+		return endx;
+	}
+
+	public void setEndx(int endx) {
+		this.endx = endx;
+	}
+
+	public int getEndy() {
+		return endy;
+	}
+
+	public void setEndy(int endy) {
+		this.endy = endy;
 	}
 }

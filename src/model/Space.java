@@ -11,16 +11,40 @@ import java.util.Random;
  */
 public class Space {
 	
-	boolean visited, revealed, blocked;
+	private boolean visited, revealed, blocked;
 
 	Space() {
-		this.visited = false;
-		this.revealed = false;
+		this.setVisited(false);
+		this.setRevealed(false);
 		Random rand = new Random();
 		int n = rand.nextInt(10) + 1;
 		if(n <= 3)
-			this.blocked = true;
+			this.setBlocked(true);
 		else
-			this.blocked = false;
+			this.setBlocked(false);
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
+	}
+
+	public boolean isRevealed() {
+		return revealed;
+	}
+
+	public void setRevealed(boolean revealed) {
+		this.revealed = revealed;
+	}
+
+	public boolean isBlocked() {
+		return blocked;
+	}
+
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
 	}
 }
