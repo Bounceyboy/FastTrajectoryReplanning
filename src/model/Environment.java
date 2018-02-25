@@ -44,6 +44,7 @@ public class Environment {
     int r = rand.nextInt(101);
     setEndx(q);
     setEndy(r);
+    map[q][r].setGoal(true);
     map[q][r].setBlocked(false);
     map[q][r].setRevealed(true);
     q = rand.nextInt(101);
@@ -58,6 +59,7 @@ public class Environment {
         starty = r;
       }
     }
+    map[q][r].setStart(true);
     map[q][r].setBlocked(false);
     map[q][r].setRevealed(true);
     map[q][r].setVisited(true);

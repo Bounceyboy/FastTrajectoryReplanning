@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -45,24 +46,22 @@ public class MainController {
      * TODO code using the algorithm once it's complete should follow this order probably: Calculate
      * next movement Set spaces in 2D array properly refreshMap() wait .5 seconds or something
      */
-
+	
     List<Space> path = this.getPath(map, map.getMap()[map.startx][map.starty],
         map.getMap()[map.getEndx()][map.getEndy()]);
 
     for (Space x : path) {
       x.setOnPath(true);
+      this.visualizeMove(x.getX(), x.getY());
       System.out.println("X: " + x.getX() + "Y: " + x.getY());
     }
-
-    this.refreshMap();
-
   }
 
   @FXML
   public void handleRemakeButtonAction(ActionEvent event) {
     maps = new AllMaps();
     map = maps.getMaps().get(0);
-    refreshMap();
+    reloadMap();
   }
 
   @FXML
@@ -198,6 +197,7 @@ public class MainController {
     item.setOnAction(a -> {
       loadMap(20);
     });
+    menuButton.getItems().add(item);
     item = new MenuItem();
     item.setText("Map 21");
     item.setOnAction(a -> {
@@ -417,7 +417,7 @@ public class MainController {
     }
   }
 
-  public void refreshMap() {
+  public void reloadMap() {
     Space[][] spaces = map.getMap();
 
 
@@ -439,6 +439,68 @@ public class MainController {
           grid.add(new Rectangle(7, 7, Color.GRAY), x, y);
       }
     }
+  }
+  
+  public void visualizeMove(int x, int y) {
+	  Space[][] spaces = map.getMap();
+	  
+	  
+	  if (x!=0) {
+		if (spaces[x-1][y].isBlocked())
+			grid.add(new Rectangle(7,7,Color.BLACK), x-1, y);
+		else {
+			if (spaces[x-1][y].isOnPath())
+				grid.add(new Rectangle(7,7,Color.RED), x-1, y);
+			else if (spaces[x-1][y].isStart())
+				grid.add(new Rectangle(7,7,Color.DODGERBLUE), x-1, y);
+			else if (spaces[x-1][y].isGoal())
+				grid.add(new Rectangle(7,7,Color.GREENYELLOW), x-1, y);
+			else
+				grid.add(new Rectangle(7,7,Color.WHITE), x-1, y);
+		}
+	  }
+	  if (x!=100) { 
+		if (spaces[x+1][y].isBlocked())
+			grid.add(new Rectangle(7,7,Color.BLACK), x+1, y);
+		else {
+			if (spaces[x+1][y].isOnPath())
+				grid.add(new Rectangle(7,7,Color.RED), x+1, y);
+			else if (spaces[x+1][y].isStart())
+				grid.add(new Rectangle(7,7,Color.DODGERBLUE), x+1, y);
+			else if (spaces[x+1][y].isGoal())
+				grid.add(new Rectangle(7,7,Color.GREENYELLOW), x+1, y);
+			else
+				grid.add(new Rectangle(7,7,Color.WHITE), x+1, y);
+		}
+	  }
+	  if (y!=0) {
+		if (spaces[x][y-1].isBlocked())
+			grid.add(new Rectangle(7,7,Color.BLACK), x, y-1);
+		else {
+			if (spaces[x][y-1].isOnPath())
+				grid.add(new Rectangle(7,7,Color.RED), x, y-1);
+			else if (spaces[x][y-1].isStart())
+				grid.add(new Rectangle(7,7,Color.DODGERBLUE), x, y-1);
+			else if (spaces[x][y-1].isGoal())
+				grid.add(new Rectangle(7,7,Color.GREENYELLOW), x, y-1);
+			else
+				grid.add(new Rectangle(7,7,Color.WHITE), x, y-1);
+		}  
+	  }
+	  if(y!=100) {
+		if (spaces[x][y+1].isBlocked())
+			grid.add(new Rectangle(7,7,Color.BLACK), x, y+1);
+		else {
+			if (spaces[x][y+1].isOnPath())
+				grid.add(new Rectangle(7,7,Color.RED), x, y+1);
+			else if (spaces[x][y+1].isStart())
+				grid.add(new Rectangle(7,7,Color.DODGERBLUE), x, y+1);
+			else if (spaces[x][y+1].isGoal())
+				grid.add(new Rectangle(7,7,Color.GREENYELLOW), x, y+1);
+			else
+				grid.add(new Rectangle(7,7,Color.WHITE), x, y+1);
+		}  
+	  }
   }
 
 
@@ -501,15 +563,14 @@ public class MainController {
           }
         }
       }
-
-      // this.refreshMap();
-      //
-      // try {
-      // Thread.sleep(500);
-      // } catch (InterruptedException e) {
-      // // TODO Auto-generated catch block
-      // e.printStackTrace();
-      // }
+      visualizeMove(current.getX(),current.getY());
+      
+//       try {
+//       Thread.sleep(50);
+//       } catch (InterruptedException e) {
+//       // TODO Auto-generated catch block
+//       e.printStackTrace();
+//       }
 
 
     }

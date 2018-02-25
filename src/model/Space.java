@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class Space {
 
-  private boolean visited, revealed, blocked, onPath;
+  private boolean visited, revealed, blocked, onPath, start, goal;
 
   private final int x, y;
 
@@ -101,4 +101,20 @@ public class Space {
   public void setOnPath(boolean onPath) {
     this.onPath = onPath;
   }
+
+public boolean isStart() {
+	return start;
+}
+
+public void setStart(boolean start) {
+	this.start = start;
+}
+
+public boolean isGoal() {
+	return goal;
+}
+
+public void setGoal(boolean goal) {
+	this.goal = goal;
+}
 }
