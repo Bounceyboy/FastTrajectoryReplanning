@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Set;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -46,15 +44,14 @@ public class MainController {
      * TODO code using the algorithm once it's complete should follow this order probably: Calculate
      * next movement Set spaces in 2D array properly refreshMap() wait .5 seconds or something
      */
-	
-    List<Space> path = this.getPath(map, map.getMap()[map.startx][map.starty],
+    this.getPath(map, map.getMap()[map.startx][map.starty],
         map.getMap()[map.getEndx()][map.getEndy()]);
 
-    for (Space x : path) {
-      x.setOnPath(true);
-      this.visualizeMove(x.getX(), x.getY());
-      System.out.println("X: " + x.getX() + "Y: " + x.getY());
-    }
+    // for (Space x : path) {
+    // x.setOnPath(true);
+    // this.visualizeMove(x.getX(), x.getY());
+    // // System.out.println("X: " + x.getX() + "Y: " + x.getY());
+    // }
   }
 
   @FXML
@@ -440,67 +437,75 @@ public class MainController {
       }
     }
   }
-  
+
   public void visualizeMove(int x, int y) {
-	  Space[][] spaces = map.getMap();
-	  
-	  
-	  if (x!=0) {
-		if (spaces[x-1][y].isBlocked())
-			grid.add(new Rectangle(7,7,Color.BLACK), x-1, y);
-		else {
-			if (spaces[x-1][y].isOnPath())
-				grid.add(new Rectangle(7,7,Color.RED), x-1, y);
-			else if (spaces[x-1][y].isStart())
-				grid.add(new Rectangle(7,7,Color.DODGERBLUE), x-1, y);
-			else if (spaces[x-1][y].isGoal())
-				grid.add(new Rectangle(7,7,Color.GREENYELLOW), x-1, y);
-			else
-				grid.add(new Rectangle(7,7,Color.WHITE), x-1, y);
-		}
-	  }
-	  if (x!=100) { 
-		if (spaces[x+1][y].isBlocked())
-			grid.add(new Rectangle(7,7,Color.BLACK), x+1, y);
-		else {
-			if (spaces[x+1][y].isOnPath())
-				grid.add(new Rectangle(7,7,Color.RED), x+1, y);
-			else if (spaces[x+1][y].isStart())
-				grid.add(new Rectangle(7,7,Color.DODGERBLUE), x+1, y);
-			else if (spaces[x+1][y].isGoal())
-				grid.add(new Rectangle(7,7,Color.GREENYELLOW), x+1, y);
-			else
-				grid.add(new Rectangle(7,7,Color.WHITE), x+1, y);
-		}
-	  }
-	  if (y!=0) {
-		if (spaces[x][y-1].isBlocked())
-			grid.add(new Rectangle(7,7,Color.BLACK), x, y-1);
-		else {
-			if (spaces[x][y-1].isOnPath())
-				grid.add(new Rectangle(7,7,Color.RED), x, y-1);
-			else if (spaces[x][y-1].isStart())
-				grid.add(new Rectangle(7,7,Color.DODGERBLUE), x, y-1);
-			else if (spaces[x][y-1].isGoal())
-				grid.add(new Rectangle(7,7,Color.GREENYELLOW), x, y-1);
-			else
-				grid.add(new Rectangle(7,7,Color.WHITE), x, y-1);
-		}  
-	  }
-	  if(y!=100) {
-		if (spaces[x][y+1].isBlocked())
-			grid.add(new Rectangle(7,7,Color.BLACK), x, y+1);
-		else {
-			if (spaces[x][y+1].isOnPath())
-				grid.add(new Rectangle(7,7,Color.RED), x, y+1);
-			else if (spaces[x][y+1].isStart())
-				grid.add(new Rectangle(7,7,Color.DODGERBLUE), x, y+1);
-			else if (spaces[x][y+1].isGoal())
-				grid.add(new Rectangle(7,7,Color.GREENYELLOW), x, y+1);
-			else
-				grid.add(new Rectangle(7,7,Color.WHITE), x, y+1);
-		}  
-	  }
+    Space[][] spaces = map.getMap();
+
+
+    if (x != 0) {
+      if (spaces[x - 1][y].isBlocked())
+        grid.add(new Rectangle(7, 7, Color.BLACK), x - 1, y);
+      else {
+        if (spaces[x - 1][y].isOnPath())
+          grid.add(new Rectangle(7, 7, Color.RED), x - 1, y);
+        // else if (spaces[x - 1][y].isOnPath())
+        // grid.add(new Rectangle(7, 7, Color.YELLOW), x - 1, y);
+        else if (spaces[x - 1][y].isStart())
+          grid.add(new Rectangle(7, 7, Color.DODGERBLUE), x - 1, y);
+        else if (spaces[x - 1][y].isGoal())
+          grid.add(new Rectangle(7, 7, Color.GREENYELLOW), x - 1, y);
+        else
+          grid.add(new Rectangle(7, 7, Color.WHITE), x - 1, y);
+      }
+    }
+    if (x != 100) {
+      if (spaces[x + 1][y].isBlocked())
+        grid.add(new Rectangle(7, 7, Color.BLACK), x + 1, y);
+      else {
+        if (spaces[x + 1][y].isOnPath())
+          grid.add(new Rectangle(7, 7, Color.RED), x + 1, y);
+        // else if (spaces[x - 1][y].isVisited())
+        // grid.add(new Rectangle(7, 7, Color.YELLOW), x - 1, y);
+        else if (spaces[x + 1][y].isStart())
+          grid.add(new Rectangle(7, 7, Color.DODGERBLUE), x + 1, y);
+        else if (spaces[x + 1][y].isGoal())
+          grid.add(new Rectangle(7, 7, Color.GREENYELLOW), x + 1, y);
+        else
+          grid.add(new Rectangle(7, 7, Color.WHITE), x + 1, y);
+      }
+    }
+    if (y != 0) {
+      if (spaces[x][y - 1].isBlocked())
+        grid.add(new Rectangle(7, 7, Color.BLACK), x, y - 1);
+      else {
+        if (spaces[x][y - 1].isOnPath())
+          grid.add(new Rectangle(7, 7, Color.RED), x, y - 1);
+        // else if (spaces[x - 1][y].isVisited())
+        // grid.add(new Rectangle(7, 7, Color.YELLOW), x - 1, y);
+        else if (spaces[x][y - 1].isStart())
+          grid.add(new Rectangle(7, 7, Color.DODGERBLUE), x, y - 1);
+        else if (spaces[x][y - 1].isGoal())
+          grid.add(new Rectangle(7, 7, Color.GREENYELLOW), x, y - 1);
+        else
+          grid.add(new Rectangle(7, 7, Color.WHITE), x, y - 1);
+      }
+    }
+    if (y != 100) {
+      if (spaces[x][y + 1].isBlocked())
+        grid.add(new Rectangle(7, 7, Color.BLACK), x, y + 1);
+      else {
+        if (spaces[x][y + 1].isOnPath())
+          grid.add(new Rectangle(7, 7, Color.RED), x, y + 1);
+        // else if (spaces[x - 1][y].isVisited())
+        // grid.add(new Rectangle(7, 7, Color.YELLOW), x - 1, y);
+        else if (spaces[x][y + 1].isStart())
+          grid.add(new Rectangle(7, 7, Color.DODGERBLUE), x, y + 1);
+        else if (spaces[x][y + 1].isGoal())
+          grid.add(new Rectangle(7, 7, Color.GREENYELLOW), x, y + 1);
+        else
+          grid.add(new Rectangle(7, 7, Color.WHITE), x, y + 1);
+      }
+    }
   }
 
 
@@ -511,7 +516,7 @@ public class MainController {
     }
   }
 
-  public List<Space> getPath(Environment map, Space start, Space goal) {
+  public void getPath(Environment map, Space start, Space goal) {
     Space current = null;
     boolean containsNeighbor;
 
@@ -519,7 +524,7 @@ public class MainController {
 
     Set<Space> closedSet = new HashSet<>(spaceCount);
 
-    PriorityQueue<Space> openSet = new PriorityQueue<Space>(spaceCount, new CellComparator());
+    BinaryHeap<Space> openSet = new BinaryHeap<Space>();
 
     openSet.add(start);
 
@@ -528,12 +533,13 @@ public class MainController {
     start.setF(start.getG() + heuristicCostEstimate(start, goal));
 
     while (!openSet.isEmpty()) {
-      current = openSet.poll();
+      current = openSet.remove();
 
       current.setVisited(true);
 
       if (current == goal) {
-        return reconstructPath(goal);
+        // TODO: popup that we've reached the goal;
+        return;
       }
 
       closedSet.add(current);
@@ -551,6 +557,7 @@ public class MainController {
 
         if (!(containsNeighbor = openSet.contains(neighbor))
             || Double.compare(tempScoreG, neighbor.getG()) < 0) {
+          current.setOnPath(true);
           neighbor.previous = current;
 
           neighbor.setG(tempScoreG);
@@ -563,19 +570,21 @@ public class MainController {
           }
         }
       }
-      visualizeMove(current.getX(),current.getY());
-      
-//       try {
-//       Thread.sleep(50);
-//       } catch (InterruptedException e) {
-//       // TODO Auto-generated catch block
-//       e.printStackTrace();
-//       }
+
+      visualizeMove(current.getX(), current.getY());
+
+
+      // try {
+      // Thread.sleep(50);
+      // } catch (InterruptedException e) {
+      // // TODO Auto-generated catch block
+      // e.printStackTrace();
+      // }
 
 
     }
-    // nothing found
-    return new ArrayList<>();
+    // TODO: popup => nothing found
+    return;
   }
 
   private List<Space> reconstructPath(Space current) {

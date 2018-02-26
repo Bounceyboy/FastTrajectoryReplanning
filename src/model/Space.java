@@ -10,7 +10,7 @@ import java.util.Random;
  * @author Jason Holley
  *
  */
-public class Space {
+public class Space implements Comparable<Space> {
 
   private boolean visited, revealed, blocked, onPath, start, goal;
 
@@ -102,19 +102,30 @@ public class Space {
     this.onPath = onPath;
   }
 
-public boolean isStart() {
-	return start;
-}
+  public boolean isStart() {
+    return start;
+  }
 
-public void setStart(boolean start) {
-	this.start = start;
-}
+  public void setStart(boolean start) {
+    this.start = start;
+  }
 
-public boolean isGoal() {
-	return goal;
-}
+  public boolean isGoal() {
+    return goal;
+  }
 
-public void setGoal(boolean goal) {
-	this.goal = goal;
-}
+  public void setGoal(boolean goal) {
+    this.goal = goal;
+  }
+
+  @Override
+  public int compareTo(Space o) {
+    if (o instanceof Space) {
+      Space input = (Space) o;
+      return Double.compare(this.getF(), input.getF());
+    }
+    return 0;
+  }
+
+
 }

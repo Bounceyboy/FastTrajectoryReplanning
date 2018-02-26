@@ -117,7 +117,7 @@ public class Environment {
     // right
     neighborX = currentX + 1;
     neighborY = currentY;
-    if (neighborY < 101) {
+    if (neighborX < 101) {
       map[neighborX][neighborY].setRevealed(true);
       if (!map[neighborX][neighborY].isBlocked()) {
         neighbors.add(map[neighborX][neighborY]);
