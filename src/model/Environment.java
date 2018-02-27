@@ -73,6 +73,13 @@ public class Environment {
       map[q][r + 1].setRevealed(true);
   }
 
+
+  /**
+   * checks for neighbors of the space
+   * 
+   * @author Jacek Zarski
+   */
+
   public List<Space> getNeighbors(Space s) {
     List<Space> neighbors = new LinkedList<Space>();
 

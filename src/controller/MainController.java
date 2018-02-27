@@ -1,12 +1,11 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -17,6 +16,11 @@ import javafx.stage.Stage;
 import model.AllMaps;
 import model.Environment;
 import model.Space;
+
+/**
+ * @author Jacek Zarski
+ * @author Jason Holley
+ */
 
 public class MainController {
 
@@ -46,12 +50,6 @@ public class MainController {
      */
     this.getPath(map, map.getMap()[map.startx][map.starty],
         map.getMap()[map.getEndx()][map.getEndy()]);
-
-    // for (Space x : path) {
-    // x.setOnPath(true);
-    // this.visualizeMove(x.getX(), x.getY());
-    // // System.out.println("X: " + x.getX() + "Y: " + x.getY());
-    // }
   }
 
   @FXML
@@ -424,7 +422,7 @@ public class MainController {
         if (spaces[x][y].isOnPath() && spaces[x][y].isVisited())
           grid.add(new Rectangle(7, 7, Color.RED), x, y);
         else if (spaces[x][y].isVisited())
-          grid.add(new Rectangle(7, 7, Color.DODGERBLUE), x, y);
+          grid.add(new Rectangle(7, 7, Color.YELLOW), x, y);
         else if (x == map.getEndx() && y == map.getEndy())
           grid.add(new Rectangle(7, 7, Color.GREENYELLOW), x, y);
         else if (spaces[x][y].isRevealed()) {
@@ -441,15 +439,14 @@ public class MainController {
   public void visualizeMove(int x, int y) {
     Space[][] spaces = map.getMap();
 
-
     if (x != 0) {
       if (spaces[x - 1][y].isBlocked())
         grid.add(new Rectangle(7, 7, Color.BLACK), x - 1, y);
       else {
         if (spaces[x - 1][y].isOnPath())
           grid.add(new Rectangle(7, 7, Color.RED), x - 1, y);
-        // else if (spaces[x - 1][y].isOnPath())
-        // grid.add(new Rectangle(7, 7, Color.YELLOW), x - 1, y);
+        else if (spaces[x - 1][y].isVisited())
+          grid.add(new Rectangle(7, 7, Color.YELLOW), x - 1, y);
         else if (spaces[x - 1][y].isStart())
           grid.add(new Rectangle(7, 7, Color.DODGERBLUE), x - 1, y);
         else if (spaces[x - 1][y].isGoal())
@@ -464,8 +461,8 @@ public class MainController {
       else {
         if (spaces[x + 1][y].isOnPath())
           grid.add(new Rectangle(7, 7, Color.RED), x + 1, y);
-        // else if (spaces[x - 1][y].isVisited())
-        // grid.add(new Rectangle(7, 7, Color.YELLOW), x - 1, y);
+        else if (spaces[x + 1][y].isVisited())
+          grid.add(new Rectangle(7, 7, Color.YELLOW), x + 1, y);
         else if (spaces[x + 1][y].isStart())
           grid.add(new Rectangle(7, 7, Color.DODGERBLUE), x + 1, y);
         else if (spaces[x + 1][y].isGoal())
@@ -480,8 +477,8 @@ public class MainController {
       else {
         if (spaces[x][y - 1].isOnPath())
           grid.add(new Rectangle(7, 7, Color.RED), x, y - 1);
-        // else if (spaces[x - 1][y].isVisited())
-        // grid.add(new Rectangle(7, 7, Color.YELLOW), x - 1, y);
+        else if (spaces[x][y - 1].isVisited())
+          grid.add(new Rectangle(7, 7, Color.YELLOW), x, y - 1);
         else if (spaces[x][y - 1].isStart())
           grid.add(new Rectangle(7, 7, Color.DODGERBLUE), x, y - 1);
         else if (spaces[x][y - 1].isGoal())
@@ -496,8 +493,8 @@ public class MainController {
       else {
         if (spaces[x][y + 1].isOnPath())
           grid.add(new Rectangle(7, 7, Color.RED), x, y + 1);
-        // else if (spaces[x - 1][y].isVisited())
-        // grid.add(new Rectangle(7, 7, Color.YELLOW), x - 1, y);
+        else if (spaces[x][y + 1].isVisited())
+          grid.add(new Rectangle(7, 7, Color.YELLOW), x, y + 1);
         else if (spaces[x][y + 1].isStart())
           grid.add(new Rectangle(7, 7, Color.DODGERBLUE), x, y + 1);
         else if (spaces[x][y + 1].isGoal())
@@ -508,48 +505,61 @@ public class MainController {
     }
   }
 
-
-  public class CellComparator implements Comparator<Space> {
-    @Override
-    public int compare(Space a, Space b) {
-      return Double.compare(a.getF(), b.getF());
-    }
-  }
-
+  /*
+   * Method to get the path with A Start and goal
+   */
   public void getPath(Environment map, Space start, Space goal) {
+    // Var for current place in the graph
     Space current = null;
     boolean containsNeighbor;
 
     int spaceCount = 101 * 101;
 
+    // set of spaces already evaluated
     Set<Space> closedSet = new HashSet<>(spaceCount);
 
+    // min heap for next best space to look at
     BinaryHeap<Space> openSet = new BinaryHeap<Space>();
 
     openSet.add(start);
 
+    // distance from start to start is 0
     start.setG(0d);
 
+    // determine sum from goal plus heuristic estimate
     start.setF(start.getG() + heuristicCostEstimate(start, goal));
 
+    // while there is still an open path
     while (!openSet.isEmpty()) {
-      current = openSet.remove();
 
+      // get the new best space
+      current = openSet.remove();
       current.setVisited(true);
 
+      // found goal
       if (current == goal) {
-        // TODO: popup that we've reached the goal;
+        reconstructShortestPath(current);
+
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Complete");
+        alert.setContentText("Path found!");
+        alert.showAndWait();
+
         return;
       }
 
+      // add current space to closed set
       closedSet.add(current);
 
+      // check each available member
       for (Space neighbor : map.getNeighbors(current)) {
         if (neighbor.isBlocked()) {
+          // space is blocked
           continue;
         }
 
         if (closedSet.contains(neighbor)) {
+          // space is closed
           continue;
         }
 
@@ -557,7 +567,8 @@ public class MainController {
 
         if (!(containsNeighbor = openSet.contains(neighbor))
             || Double.compare(tempScoreG, neighbor.getG()) < 0) {
-          current.setOnPath(true);
+
+          // link the now previous space to the space we are going to move to
           neighbor.previous = current;
 
           neighbor.setG(tempScoreG);
@@ -572,32 +583,31 @@ public class MainController {
       }
 
       visualizeMove(current.getX(), current.getY());
-
-
       // try {
       // Thread.sleep(50);
       // } catch (InterruptedException e) {
       // // TODO Auto-generated catch block
       // e.printStackTrace();
       // }
-
-
     }
     // TODO: popup => nothing found
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Impossible");
+    alert.setContentText("No possible path :(");
+    alert.showAndWait();
     return;
   }
 
-  private List<Space> reconstructPath(Space current) {
+  private void reconstructShortestPath(Space current) {
 
-    List<Space> totalPath = new ArrayList<>(5000);
-
-    totalPath.add(current);
+    current.setOnPath(true);
 
     while ((current = current.previous) != null) {
-      totalPath.add(current);
+      current.setOnPath(true);
+      visualizeMove(current.getX(), current.getY());
     }
 
-    return totalPath;
+    return;
   }
 
   private double distBetween(Space current, Space neighbor) {

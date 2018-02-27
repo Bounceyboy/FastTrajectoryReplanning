@@ -2,14 +2,18 @@ package controller;
 
 import java.util.Arrays;
 
+/**
+ * Binary heap with contains function
+ * 
+ * @author Jacek Zarski
+ */
+
+
 public class BinaryHeap<T extends Comparable<T>> {
   private static final int DEFAULT_CAPACITY = 10;
   protected T[] array;
   protected int size;
 
-  /**
-   * Constructs a new BinaryHeap.
-   */
   @SuppressWarnings("unchecked")
   public BinaryHeap() {
     // Java doesn't allow construction of arrays of placeholder data types
@@ -17,27 +21,16 @@ public class BinaryHeap<T extends Comparable<T>> {
     size = 0;
   }
 
-
-  /**
-   * Adds a value to the min-heap.
-   */
   public void add(T value) {
-    // grow array if needed
     if (size >= array.length - 1) {
       array = this.resize();
     }
-
-    // place element into heap at bottom
     size++;
     int index = size;
     array[index] = value;
-
     bubbleUp();
   }
 
-  /**
-   * checks if element is in the heap
-   */
   public boolean contains(T element) {
     int index = 0;
     int lIndex, rIndex;
@@ -66,17 +59,10 @@ public class BinaryHeap<T extends Comparable<T>> {
     return false;
   }
 
-  /**
-   * Returns true if the heap has no elements; false otherwise.
-   */
   public boolean isEmpty() {
     return size == 0;
   }
 
-
-  /**
-   * Returns (but does not remove) the minimum element in the heap.
-   */
   public T peek() {
     if (this.isEmpty()) {
       throw new IllegalStateException();
@@ -85,10 +71,6 @@ public class BinaryHeap<T extends Comparable<T>> {
     return array[1];
   }
 
-
-  /**
-   * Removes and returns the minimum element in the heap.
-   */
   public T remove() {
     // what do want return?
     T result = peek();
@@ -103,29 +85,16 @@ public class BinaryHeap<T extends Comparable<T>> {
     return result;
   }
 
-
-  /**
-   * Returns a String representation of BinaryHeap with values stored with heap structure and order
-   * properties.
-   */
   public String toString() {
     return Arrays.toString(array);
   }
 
-
-  /**
-   * Performs the "bubble down" operation to place the element that is at the root of the heap in
-   * its correct place so that the heap maintains the min-heap order property.
-   */
   protected void bubbleDown() {
     int index = 1;
 
-    // bubble down
     while (hasLeftChild(index)) {
-      // which of my children is smaller?
       int smallerChild = leftIndex(index);
 
-      // bubble with the smaller child, if I have a smaller child
       if (hasRightChild(index) && array[leftIndex(index)].compareTo(array[rightIndex(index)]) > 0) {
         smallerChild = rightIndex(index);
       }
@@ -133,20 +102,13 @@ public class BinaryHeap<T extends Comparable<T>> {
       if (array[index].compareTo(array[smallerChild]) > 0) {
         swap(index, smallerChild);
       } else {
-        // otherwise, get outta here!
         break;
       }
 
-      // make sure to update loop counter/index of where last el is put
       index = smallerChild;
     }
   }
 
-
-  /**
-   * Performs the "bubble up" operation to place a newly inserted element (i.e. the element that is
-   * at the size index) in its correct place so that the heap maintains the min-heap order property.
-   */
   protected void bubbleUp() {
     int index = this.size;
 

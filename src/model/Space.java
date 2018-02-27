@@ -8,7 +8,12 @@ import java.util.Random;
  * constructor is called.
  * 
  * @author Jason Holley
+ * @author Jacek Zarski
  *
+ * @value <br>
+ *        g = distance from start to current cell <br>
+ *        h = distance from current cell to goal <br>
+ *        f = g + h <br>
  */
 public class Space implements Comparable<Space> {
 
@@ -17,10 +22,6 @@ public class Space implements Comparable<Space> {
   private final int x, y;
 
   public Space previous;
-
-  /*
-   * g = distance from start to current cell h = distance from current cell to goal f = g + h
-   */
 
   double f, g, h;
 
@@ -122,6 +123,8 @@ public class Space implements Comparable<Space> {
   public int compareTo(Space o) {
     if (o instanceof Space) {
       Space input = (Space) o;
+      if (Double.compare(this.getF(), input.getF()) == 0)
+        return Double.compare(input.getG(), this.getG());
       return Double.compare(this.getF(), input.getF());
     }
     return 0;
